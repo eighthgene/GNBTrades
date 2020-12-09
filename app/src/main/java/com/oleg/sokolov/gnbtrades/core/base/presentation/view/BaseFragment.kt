@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.annotation.StringRes
+import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
 import com.oleg.sokolov.gnbtrades.core.base.presentation.EMPTY_STRING
 import com.oleg.sokolov.gnbtrades.core.extensions.gone
@@ -41,4 +42,8 @@ abstract class BaseFragment : Fragment() {
     open fun showLoading(progressBar: ProgressBar) = progressBar.visible()
 
     open fun hideLoading(progressBar: ProgressBar) = progressBar.gone()
+
+    open fun hide(group: Group) = group.gone()
+
+    open fun show(group: Group) = group.visible()
 }

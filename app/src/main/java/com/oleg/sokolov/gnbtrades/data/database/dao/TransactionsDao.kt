@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.oleg.sokolov.gnbtrades.data.database.TRANSACTIONS_NAME_COLUMN
 import com.oleg.sokolov.gnbtrades.data.database.TRANSACTIONS_TABLE_NAME
 import com.oleg.sokolov.gnbtrades.data.database.model.TransactionEntity
 
@@ -16,4 +17,6 @@ interface TransactionsDao {
     @Query("SELECT * FROM $TRANSACTIONS_TABLE_NAME")
     suspend fun getTransactions(): List<TransactionEntity>
 
+    @Query("SELECT DISTINCT $TRANSACTIONS_NAME_COLUMN FROM $TRANSACTIONS_TABLE_NAME")
+    suspend fun getProductsNames(): List<String>
 }

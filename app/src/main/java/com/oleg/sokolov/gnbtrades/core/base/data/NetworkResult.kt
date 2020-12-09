@@ -53,3 +53,32 @@ inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getData
         return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
     }
 }
+
+inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getDataFromCache(
+    cacheAction: (R) -> Unit,
+    fetchFromCacheAction: () -> R
+): Result<U> {
+    try {
+        onSuccess {
+            val databaseEntity = it.mapToRoomEntity()
+            cacheAction(databaseEntity)
+            val cachedModel = fetchFromCacheAction()
+            return if (cachedModel != null) Success(cachedModel.mapToDomainModel()) else Failure(
+                HttpError(
+                    Throwable(DB_ENTRY_ERROR)
+                )
+            )
+        }
+        onFailure {
+            val cachedModel = fetchFromCacheAction()
+            if (cachedModel != null) Success(cachedModel.mapToDomainModel()) else Failure(
+                HttpError(
+                    Throwable(DB_ENTRY_ERROR)
+                )
+            )
+        }
+        return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+    } catch (e: IOException) {
+        return Failure(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+    }
+}

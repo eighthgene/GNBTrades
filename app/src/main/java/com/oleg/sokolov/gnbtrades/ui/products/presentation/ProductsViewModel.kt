@@ -1,11 +1,14 @@
 package com.oleg.sokolov.gnbtrades.ui.products.presentation
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import com.oleg.sokolov.gnbtrades.core.base.domain.model.onFailure
 import com.oleg.sokolov.gnbtrades.core.base.domain.model.onSuccess
+import com.oleg.sokolov.gnbtrades.core.base.presentation.view.Error
+import com.oleg.sokolov.gnbtrades.core.base.presentation.view.NoInternetState
+import com.oleg.sokolov.gnbtrades.core.base.presentation.view.Success
 import com.oleg.sokolov.gnbtrades.core.base.presentation.viewmodel.BaseViewModel
 import com.oleg.sokolov.gnbtrades.core.coroutine.CoroutineContextProvider
+import com.oleg.sokolov.gnbtrades.core.extensions.launch
 import com.oleg.sokolov.gnbtrades.core.network.Connectivity
 import com.oleg.sokolov.gnbtrades.domain.interaction.products.GetProductListUseCase
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsAction
@@ -16,17 +19,38 @@ class ProductsViewModel @ViewModelInject constructor(
     private val getProductListUseCase: GetProductListUseCase,
     conn: Connectivity,
     contextProvider: CoroutineContextProvider
-): BaseViewModel<ProductsScreen, ProductsAction, ProductsViewEffects>(conn, contextProvider) {
+) : BaseViewModel<List<ProductsScreen>, ProductsAction, ProductsViewEffects>(
+    conn,
+    contextProvider
+) {
+
+    private val productsList = ArrayList<ProductsScreen>()
 
     override fun onAction(action: ProductsAction) {
-        when(action){
-            ProductsAction.OnStart -> getProductsList()
+        when (action) {
+            is ProductsAction.OnViewStarted -> {
+                if (productsList.isEmpty()) getProductsList()
+            }
+            is ProductsAction.OnItemClick -> _viewEffects.value = ProductsViewEffects.NavigateToDetails(productsList[action.position].name)
         }
     }
 
     private fun getProductsList() = executeUseCase {
         getProductListUseCase()
-            .onSuccess {  }
-            .onFailure {  }
+            .onSuccess {
+                runOnUI {
+                    if (!connectivity.hasNetworkAccess()) {
+                        _viewState.value = NoInternetState()
+                    }
+                    productsList.clear()
+                    productsList.addAll(it.map { ProductsScreen(it) })
+                    _viewState.value = Success(productsList)
+                }
+            }
+            .onFailure {
+                runOnUI {
+                    _viewState.value = Error(it.throwable)
+                }
+            }
     }
 }

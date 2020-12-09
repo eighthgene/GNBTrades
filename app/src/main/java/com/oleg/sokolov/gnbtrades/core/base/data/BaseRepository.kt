@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 abstract class BaseRepository<T : Any, R : DomainMapper<T>> constructor(
     private val connectivity: Connectivity,
-    private val contextProvider: CoroutineContextProvider
+    val contextProvider: CoroutineContextProvider
 ) {
 
 

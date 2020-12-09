@@ -8,4 +8,8 @@ interface TransactionsRepository {
     suspend fun getTransactions(): Result<List<Transaction>>
 
     suspend fun getTransactions(product : String): Result<List<Transaction>>
+
+    suspend fun getProductsNames(): Result<List<String>>
+
+
 }

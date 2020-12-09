@@ -11,4 +11,5 @@ abstract class TransactionsDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionsDao
 
+
 }

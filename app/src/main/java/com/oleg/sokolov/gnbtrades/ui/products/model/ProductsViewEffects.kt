@@ -1,4 +1,5 @@
 package com.oleg.sokolov.gnbtrades.ui.products.model
 
-class ProductsViewEffects {
+sealed class ProductsViewEffects {
+    class NavigateToDetails(product: String) : ProductsViewEffects()
 }

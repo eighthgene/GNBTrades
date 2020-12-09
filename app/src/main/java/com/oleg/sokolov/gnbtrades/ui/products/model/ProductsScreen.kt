@@ -1,4 +1,3 @@
 package com.oleg.sokolov.gnbtrades.ui.products.model
 
-class ProductsScreen {
-}
+data class ProductsScreen(val name: String)

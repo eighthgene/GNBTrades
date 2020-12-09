@@ -9,11 +9,12 @@ import java.math.BigDecimal
 
 @Entity(tableName = TRANSACTIONS_TABLE_NAME)
 data class TransactionEntity(
-    @PrimaryKey
     val name: String,
     val amount: String,
     val currency: String
 ) : DomainMapper<Transaction> {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
     override fun mapToDomainModel() = Transaction(
         name = name,
         amount = BigDecimal(amount),
