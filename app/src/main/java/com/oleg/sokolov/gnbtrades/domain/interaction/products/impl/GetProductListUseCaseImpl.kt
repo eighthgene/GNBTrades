@@ -16,7 +16,7 @@ class GetProductListUseCaseImpl @Inject constructor(
             is Success -> {
                 return when(val productsNames = transactionsRepository.getProductsNames()){
                     is Success -> {
-                        Success(productsNames.data)
+                        Success(productsNames.data.sorted())
                     }
                     is Failure -> Failure(productsNames.error)
                 }

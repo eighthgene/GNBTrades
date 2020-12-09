@@ -2,6 +2,7 @@ package com.oleg.sokolov.gnbtrades.ui.products.view
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oleg.sokolov.gnbtrades.R
@@ -14,10 +15,10 @@ import com.oleg.sokolov.gnbtrades.core.extensions.visible
 import com.oleg.sokolov.gnbtrades.domain.exceptions.EmptyListException
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsAction
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsScreen
+import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsViewEffects
 import com.oleg.sokolov.gnbtrades.ui.products.presentation.ProductsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_products.*
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,12 +34,12 @@ class ProductsFragment : BaseFragment() {
     override fun viewReady() {
         viewModel.onAction(ProductsAction.OnViewStarted)
         subscribeToData()
-        bindView()
         setupRecyclerView()
     }
 
     private fun subscribeToData() {
         viewModel.viewState.subscribe(this, ::renderState)
+        viewModel.viewEffects.subscribe(this, ::handleViewEffects)
     }
 
     private fun renderState(viewState: ViewState<List<ProductsScreen>>) {
@@ -50,11 +51,19 @@ class ProductsFragment : BaseFragment() {
         }
     }
 
+    private fun handleViewEffects(viewEffect: ProductsViewEffects) {
+        when (viewEffect) {
+            is ProductsViewEffects.NavigateToDetails ->    {
+                val action = ProductsFragmentDirections.actionProductsFragmentToDetailsFragment(viewEffect.product)
+                findNavController().navigate(action)
+            }
+        }
+    }
+
     private fun showProductsList(products: List<ProductsScreen>) {
         hide(products_loader)
         updateLoading(products)
         adapter.updateItems(products)
-        Timber.d("showProductsList: ${adapter.itemCount}")
     }
 
     private fun updateLoading(listData: List<ProductsScreen>) {
@@ -98,8 +107,6 @@ class ProductsFragment : BaseFragment() {
         productsRecycler.adapter = adapter
     }
 
-    private fun bindView() {
-    }
 
 
 

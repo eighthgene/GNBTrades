@@ -9,14 +9,22 @@
         android:id="@+id/productsFragment"
         android:name="com.oleg.sokolov.gnbtrades.ui.products.view.ProductsFragment"
         android:label="fragment_products"
-        tools:layout="@layout/fragment_products" >
+        tools:layout="@layout/fragment_products">
         <action
             android:id="@+id/action_productsFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.oleg.sokolov.gnbtrades.ui.details.view.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="productNameArg"
+            app:argType="string" />
+    </fragment>
 </navigation>
