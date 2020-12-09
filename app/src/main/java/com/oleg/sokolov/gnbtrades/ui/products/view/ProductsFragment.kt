@@ -1,8 +1,10 @@
 package com.oleg.sokolov.gnbtrades.ui.products.view
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oleg.sokolov.gnbtrades.R
@@ -19,6 +21,7 @@ import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsViewEffects
 import com.oleg.sokolov.gnbtrades.ui.products.presentation.ProductsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.fragment_transactions.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -105,9 +108,18 @@ class ProductsFragment : BaseFragment() {
             }
         })
         productsRecycler.adapter = adapter
+        setupDivider()
     }
 
-
+    private fun setupDivider(){
+        context?.let { context ->
+            ContextCompat.getDrawable(context, R.drawable.divider)?.let {
+                val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
+                dividerItemDecoration.setDrawable(it)
+                productsRecycler.addItemDecoration(dividerItemDecoration)
+            }
+        }
+    }
 
 
 

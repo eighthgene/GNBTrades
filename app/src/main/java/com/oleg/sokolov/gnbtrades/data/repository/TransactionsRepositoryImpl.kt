@@ -48,7 +48,7 @@ class TransactionsRepositoryImpl @Inject constructor(
 
     override suspend fun getTransactions(product: String): Result<List<Transaction>> {
         return fetchData {
-            TransactionEntityList(transactionsDao.getTransactions())
+            TransactionEntityList(transactionsDao.getTransactions(product))
         }
     }
 

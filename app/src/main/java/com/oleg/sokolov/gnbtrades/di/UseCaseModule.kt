@@ -2,6 +2,8 @@ package com.oleg.sokolov.gnbtrades.di
 
 import com.oleg.sokolov.gnbtrades.domain.interaction.products.GetProductListUseCase
 import com.oleg.sokolov.gnbtrades.domain.interaction.products.impl.GetProductListUseCaseImpl
+import com.oleg.sokolov.gnbtrades.domain.interaction.transactions.GetTransactionsUseCase
+import com.oleg.sokolov.gnbtrades.domain.interaction.transactions.impl.GetTransactionsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +16,10 @@ abstract class UseCaseModule {
 
     @ActivityRetainedScoped
     @Binds
-    abstract fun provideGetProductList(getProductListUseCaseImpl: GetProductListUseCaseImpl): GetProductListUseCase
+    abstract fun provideGetProductListUseCase(getProductListUseCaseImpl: GetProductListUseCaseImpl): GetProductListUseCase
+
+    @ActivityRetainedScoped
+    @Binds
+    abstract fun provideGetTransactionsUseCase(getTransactionsUseCase: GetTransactionsUseCaseImpl): GetTransactionsUseCase
 
 }

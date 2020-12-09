@@ -17,6 +17,9 @@ interface TransactionsDao {
     @Query("SELECT * FROM $TRANSACTIONS_TABLE_NAME")
     suspend fun getTransactions(): List<TransactionEntity>
 
+    @Query("SELECT * FROM $TRANSACTIONS_TABLE_NAME WHERE $TRANSACTIONS_NAME_COLUMN =:product")
+    suspend fun getTransactions(product: String): List<TransactionEntity>
+
     @Query("SELECT DISTINCT $TRANSACTIONS_NAME_COLUMN FROM $TRANSACTIONS_TABLE_NAME")
     suspend fun getProductsNames(): List<String>
 }

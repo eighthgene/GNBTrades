@@ -20,9 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.oleg.sokolov.gnbtrades.ui.details.view.DetailsFragment"
+        android:name="com.oleg.sokolov.gnbtrades.ui.transactions.view.TransactionsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" >
+        tools:layout="@layout/fragment_transactions" >
         <argument
             android:name="productNameArg"
             app:argType="string" />
