@@ -1,6 +1,8 @@
-package com.oleg.sokolov.gnbtrades.core.base.data
+package com.oleg.sokolov.gnbtrades.di
 
+import com.oleg.sokolov.gnbtrades.data.repository.RatesRepositoryImpl
 import com.oleg.sokolov.gnbtrades.data.repository.TransactionsRepositoryImpl
+import com.oleg.sokolov.gnbtrades.domain.repository.RatesRepository
 import com.oleg.sokolov.gnbtrades.domain.repository.TransactionsRepository
 import dagger.Binds
 import dagger.Module
@@ -17,5 +19,11 @@ abstract class RepositoryModule {
     abstract fun provideTransactionRepository(
         transactionsRepository: TransactionsRepositoryImpl
     ): TransactionsRepository
+
+    @ActivityRetainedScoped
+    @Binds
+    abstract fun provideRatesRepository(
+        ratesRepository: RatesRepositoryImpl
+    ): RatesRepository
 
 }

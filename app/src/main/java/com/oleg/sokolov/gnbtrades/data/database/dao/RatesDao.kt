@@ -17,4 +17,7 @@ interface RatesDao {
 
     @Query("SELECT * FROM $RATES_TABLE_NAME")
     suspend fun getRates(): List<RateEntity>
+
+    @Query("DELETE FROM $RATES_TABLE_NAME")
+    suspend fun removeAll()
 }

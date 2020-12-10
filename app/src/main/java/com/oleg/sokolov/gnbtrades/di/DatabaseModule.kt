@@ -2,7 +2,7 @@ package com.oleg.sokolov.gnbtrades.di
 
 import android.content.Context
 import androidx.room.Room
-import com.oleg.sokolov.gnbtrades.data.database.TransactionsDatabase
+import com.oleg.sokolov.gnbtrades.data.database.GNBankDatabase
 
 import dagger.Module
 import dagger.Provides
@@ -21,13 +21,17 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, TransactionsDatabase::class.java, TRANSACTIONS_DB)
+        Room.databaseBuilder(context, GNBankDatabase::class.java, TRANSACTIONS_DB)
             .fallbackToDestructiveMigration().build()
 
 
     @Provides
     @Singleton
-    fun provideTransactionDao(transactionsDatabase: TransactionsDatabase) =
-        transactionsDatabase.transactionDao()
+    fun provideTransactionDao(GNBankDatabase: GNBankDatabase) =
+        GNBankDatabase.transactionDao()
 
+    @Provides
+    @Singleton
+    fun provideRatesDao(GNBankDatabase: GNBankDatabase) =
+        GNBankDatabase.rateDao()
 }

@@ -14,9 +14,11 @@ import com.oleg.sokolov.gnbtrades.core.extensions.visible
 import com.oleg.sokolov.gnbtrades.domain.exceptions.EmptyListException
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsAction
+import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreeData
 import com.oleg.sokolov.gnbtrades.ui.transactions.presentation.TransactionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_transactions.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,20 +48,26 @@ class TransactionsFragment : BaseFragment() {
                 transactionsRecycler.addItemDecoration(dividerItemDecoration)
             }
         }
-
     }
 
     private fun subscribeToData() {
         viewModel.viewState.subscribe(this, ::renderState)
     }
 
-    private fun renderState(viewState: ViewState<List<TransactionsScreen>>) {
+    private fun renderState(viewState: ViewState<TransactionsScreeData>) {
         when (viewState) {
-            is Success -> showListData(viewState.data)
+            is Success -> {
+                showListData(viewState.data.list)
+                updateTotal(viewState.data.total)
+            }
             is Error -> handleError(viewState.error)
             is Loading -> showLoading(listLoadingProgress)
             is NoInternetState -> showNoInternetError()
         }
+    }
+
+    private fun updateTotal(total: String) {
+        transaction_total.text = total
     }
 
     private fun showNoInternetError() {}

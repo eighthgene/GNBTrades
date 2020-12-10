@@ -22,11 +22,15 @@ class RatesRepositoryImpl @Inject constructor(
     contextProvider = contextProvider
 ), RatesRepository {
 
+    /*
+    Get rates from Rest API if has connection, else get rates from DataBase
+     */
     override suspend fun getRates(): Result<List<Rate>> {
         return fetchData(
             apiDataProvider = {
                 GNBankApi.getRates().getUpdatedDataFromCache(
                     cacheAction = {
+                        ratesDao.removeAll()
                         ratesDao.saveRate(it.rateList)
                     },
                     fetchFromCacheAction = {

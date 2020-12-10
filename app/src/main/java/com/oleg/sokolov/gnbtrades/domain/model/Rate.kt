@@ -1,3 +1,5 @@
 package com.oleg.sokolov.gnbtrades.domain.model
 
-data class Rate(val from: String, val to: String, val rate: String)
+import java.math.BigDecimal
+
+data class Rate(val from: String, val to: String, val rate: BigDecimal)

@@ -6,6 +6,7 @@ import com.oleg.sokolov.gnbtrades.data.database.RATES_FROM_PRIMARY_KEY
 import com.oleg.sokolov.gnbtrades.data.database.RATES_TABLE_NAME
 import com.oleg.sokolov.gnbtrades.data.database.RATES_TO_PRIMARY_KEY
 import com.oleg.sokolov.gnbtrades.domain.model.Rate
+import java.math.BigDecimal
 
 
 @Entity(
@@ -20,6 +21,6 @@ data class RateEntity(
     override fun mapToDomainModel() = Rate(
         from = from,
         to = to,
-        rate = rate
+        rate = BigDecimal(rate)
     )
 }
