@@ -3,8 +3,9 @@ package com.oleg.sokolov.gnbtrades.di
 import android.content.Context
 import com.oleg.sokolov.gnbtrades.core.network.Connectivity
 import com.oleg.sokolov.gnbtrades.core.network.ConnectivityImpl
-import com.oleg.sokolov.gnbtrades.data.TransactionsApi
-import com.oleg.sokolov.gnbtrades.data.networking.ResponseAdapter
+import com.oleg.sokolov.gnbtrades.data.GNBankApi
+import com.oleg.sokolov.gnbtrades.data.networking.TransactionsResponseAdapter
+import com.oleg.sokolov.gnbtrades.data.networking.model.RatesResponseAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -22,16 +23,22 @@ object NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder().add(ResponseAdapter()).build()
+    fun provideMoshi(): Moshi =
+        Moshi.Builder()
+            .add(TransactionsResponseAdapter())
+            .add(RatesResponseAdapter())
+            .build()
+
 
     @Provides
     @Singleton
-    fun provideRetrofit(adapter: Moshi ,httpClient: OkHttpClient): Retrofit =
+    fun provideTransactionsRetrofit(adapter: Moshi, httpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl("http://quiet-stone-2094.herokuapp.com")
             .client(httpClient)
             .addConverterFactory(MoshiConverterFactory.create(adapter))
             .build()
+
 
     @Provides
     @Singleton
@@ -47,6 +54,7 @@ object NetworkingModule {
 
     @Singleton
     @Provides
-    fun provideTransactionsApi(retrofit: Retrofit): TransactionsApi = retrofit.create(TransactionsApi::class.java)
+    fun provideTransactionsApi(retrofit: Retrofit): GNBankApi =
+        retrofit.create(GNBankApi::class.java)
 
 }

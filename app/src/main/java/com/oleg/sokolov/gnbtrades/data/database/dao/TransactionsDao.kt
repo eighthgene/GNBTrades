@@ -22,4 +22,5 @@ interface TransactionsDao {
 
     @Query("SELECT DISTINCT $TRANSACTIONS_NAME_COLUMN FROM $TRANSACTIONS_TABLE_NAME")
     suspend fun getProductsNames(): List<String>
+
 }

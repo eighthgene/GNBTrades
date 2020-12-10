@@ -1,15 +1,14 @@
 package com.oleg.sokolov.gnbtrades.data.repository
 
 import com.oleg.sokolov.gnbtrades.core.base.data.BaseRepository
-import com.oleg.sokolov.gnbtrades.core.base.data.getData
-import com.oleg.sokolov.gnbtrades.core.base.data.getDataFromCache
+import com.oleg.sokolov.gnbtrades.core.base.data.getUpdatedDataFromCache
 import com.oleg.sokolov.gnbtrades.core.base.domain.model.Failure
 import com.oleg.sokolov.gnbtrades.core.base.domain.model.HttpError
 import com.oleg.sokolov.gnbtrades.core.base.domain.model.Result
 import com.oleg.sokolov.gnbtrades.core.base.domain.model.Success
 import com.oleg.sokolov.gnbtrades.core.coroutine.CoroutineContextProvider
 import com.oleg.sokolov.gnbtrades.core.network.Connectivity
-import com.oleg.sokolov.gnbtrades.data.TransactionsApi
+import com.oleg.sokolov.gnbtrades.data.GNBankApi
 import com.oleg.sokolov.gnbtrades.data.database.dao.TransactionsDao
 import com.oleg.sokolov.gnbtrades.data.database.model.TransactionEntityList
 import com.oleg.sokolov.gnbtrades.data.networking.DB_ENTRY_ERROR
@@ -19,7 +18,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class TransactionsRepositoryImpl @Inject constructor(
-    private val transactionsApi: TransactionsApi,
+    private val GNBankApi: GNBankApi,
     private val transactionsDao: TransactionsDao,
     connectivity: Connectivity,
     contextProvider: CoroutineContextProvider
@@ -31,7 +30,7 @@ class TransactionsRepositoryImpl @Inject constructor(
     override suspend fun getTransactions(): Result<List<Transaction>> {
         return fetchData(
             apiDataProvider = {
-                transactionsApi.getTransactions().getDataFromCache(
+                GNBankApi.getTransactions().getUpdatedDataFromCache(
                     cacheAction = { it ->
                         transactionsDao.saveTransaction(it.transactionList)
                     },

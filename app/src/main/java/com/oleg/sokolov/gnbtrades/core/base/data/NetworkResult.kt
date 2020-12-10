@@ -54,7 +54,7 @@ inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getData
     }
 }
 
-inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getDataFromCache(
+inline fun <T : RoomMapper<R>, R : DomainMapper<U>, U : Any> Response<T>.getUpdatedDataFromCache(
     cacheAction: (R) -> Unit,
     fetchFromCacheAction: () -> R
 ): Result<U> {

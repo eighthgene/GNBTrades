@@ -4,7 +4,7 @@ import com.oleg.sokolov.gnbtrades.data.networking.model.TransactionItemResponse
 import com.oleg.sokolov.gnbtrades.data.networking.model.TransactionResponse
 import com.squareup.moshi.FromJson
 
-class ResponseAdapter {
+class TransactionsResponseAdapter {
 
     @FromJson
     fun fromJson(list: List<TransactionItemResponse>): TransactionResponse {

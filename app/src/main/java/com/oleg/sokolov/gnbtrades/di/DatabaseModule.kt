@@ -2,8 +2,6 @@ package com.oleg.sokolov.gnbtrades.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.oleg.sokolov.gnbtrades.data.TransactionsApi
 import com.oleg.sokolov.gnbtrades.data.database.TransactionsDatabase
 
 import dagger.Module
