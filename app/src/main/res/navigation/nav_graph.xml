@@ -8,21 +8,21 @@
     <fragment
         android:id="@+id/productsFragment"
         android:name="com.oleg.sokolov.gnbtrades.ui.products.view.ProductsFragment"
-        android:label="fragment_products"
+        android:label="Products List"
         tools:layout="@layout/fragment_products">
         <action
             android:id="@+id/action_productsFragment_to_detailsFragment"
             app:destination="@id/detailsFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left">
-
-        </action>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.oleg.sokolov.gnbtrades.ui.transactions.view.TransactionsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_transactions" >
+        android:label="Transactions"
+        tools:layout="@layout/fragment_transactions">
         <argument
             android:name="productNameArg"
             app:argType="string" />

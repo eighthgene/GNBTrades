@@ -31,6 +31,7 @@ class TransactionsFragment : BaseFragment() {
     lateinit var adapter: TransactionsAdapter
 
     override fun viewReady() {
+
         viewModel.onAction(TransactionsAction.OnViewLoaded(args.productNameArg))
         subscribeToData()
         setupRecyclerView()
