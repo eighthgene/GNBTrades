@@ -4,7 +4,6 @@ import com.oleg.sokolov.gnbtrades.core.base.domain.model.*
 import com.oleg.sokolov.gnbtrades.domain.interaction.products.GetProductListUseCase
 import com.oleg.sokolov.gnbtrades.domain.model.Transaction
 import com.oleg.sokolov.gnbtrades.domain.repository.TransactionsRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class GetProductListUseCaseImpl @Inject constructor(

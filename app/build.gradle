@@ -1,107 +1,76 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply from: "$rootDir/dependencies.gradle"
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.oleg.sokolov.gnbtrades"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        versionCode rootProject.versionCode
-        versionName rootProject.versionName
 
+        versionCode configs.versionCode
+        versionName configs.versionName
+
+        applicationId configs.applicationId
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
             minifyEnabled false
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
 }
-
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
-    implementation "androidx.appcompat:appcompat:$appcompatVersion"
-    implementation "androidx.core:core-ktx:$ktxCoreVersion"
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation libs.appCompat
+    implementation libs.core
 
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerviewVersion"
+    implementation libs.coroutinesCore
+    implementation libs.coroutinesAndroid
 
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    //Jetpack
+    implementation libs.material
+    implementation libs.constraints
+    implementation libs.activity
+    implementation libs.fragment
+    implementation libs.lifecycleExt
+    implementation libs.viewModel
+    implementation libs.livedata
+    implementation libs.recyclerview
 
-    // Activity KTX for viewModels()
-    implementation "androidx.activity:activity-ktx:$ktxActivityVersion"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:$timberVersion"
-
-    // Dagger Hilt
-    implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
-
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifecycleVersion"
-    kapt "androidx.hilt:hilt-compiler:$hiltLifecycleVersion"
+    //Navigation
+    implementation libs.navigation
+    implementation libs.navigationUI
 
     //Moshi
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
+    implementation libs.moshi
+    kapt libs.moshiCodegen
+    implementation libs.moshiAdapter
 
     //Retrofit2
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation libs.retrofit
+    implementation libs.retrofitMoshi
 
-    //database
-    implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
+    //Database
+    implementation libs.roomRuntime
+    kapt libs.roomCompiler
+    implementation libs.room
 
     //Okhttp3
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation libs.okhttp
+    implementation libs.okhttpInterceptor
 
-    testImplementation "junit:junit:$jUnitVersion"
+    implementation libs.hilt
+    implementation libs.hiltLegacy
+    kapt libs.hiltCompiler
 
-    // MockK
-    testImplementation "io.mockk:mockk:$mockkVersion"
-
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesCoreVersion")
-    testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoVersion"
-
-    androidTestImplementation "androidx.test.ext:junit:$androidxTestVersion"
-    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    androidTestImplementation "androidx.test:core-ktx:$testCoreKtxVersion"
-    debugImplementation "androidx.fragment:fragment-testing:$testFragmentVersion"
+    implementation libs.hiltViewModel
+    kapt libs.hiltViewModelCompiler
 
 }

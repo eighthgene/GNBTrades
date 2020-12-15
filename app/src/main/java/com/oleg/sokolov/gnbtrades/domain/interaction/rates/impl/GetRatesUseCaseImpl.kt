@@ -38,6 +38,8 @@ class GetRatesUseCaseImpl @Inject constructor(
             } else {
                 getPairRate(transaction.currency, param.to)
             }
+            Timber.d("Rate for ${transaction.currency} to EUR is: $rate")
+            Timber.d("All rates are: $rates")
             val exchangedAmount: BigDecimal = transaction.amount.multiply(rate)
             transactionExchangeList.add(
                 TransactionsExchanged(
