@@ -1,10 +1,9 @@
 package com.oleg.sokolov.gnbtrades
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.oleg.sokolov.gnbtrades.di.DaggerAppComponent
 import timber.log.Timber
 
-@HiltAndroidApp
 class App : Application() {
 
     override fun onCreate() {
@@ -13,5 +12,11 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+    }
+
+    val component by lazy {
+        DaggerAppComponent
+            .factory()
+            .crete(this)
     }
 }

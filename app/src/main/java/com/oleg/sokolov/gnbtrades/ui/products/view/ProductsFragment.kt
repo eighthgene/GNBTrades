@@ -3,41 +3,48 @@ package com.oleg.sokolov.gnbtrades.ui.products.view
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oleg.sokolov.gnbtrades.App
 import com.oleg.sokolov.gnbtrades.R
-import com.oleg.sokolov.gnbtrades.core.base.presentation.adapter.BaseAdapterCallback
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.*
-import com.oleg.sokolov.gnbtrades.core.extensions.gone
-import com.oleg.sokolov.gnbtrades.core.extensions.snackbar
-import com.oleg.sokolov.gnbtrades.core.extensions.subscribe
-import com.oleg.sokolov.gnbtrades.core.extensions.visible
+import com.oleg.sokolov.gnbtrades.common.extensions.gone
+import com.oleg.sokolov.gnbtrades.common.extensions.snackbar
+import com.oleg.sokolov.gnbtrades.common.extensions.subscribe
+import com.oleg.sokolov.gnbtrades.common.extensions.visible
 import com.oleg.sokolov.gnbtrades.domain.exceptions.EmptyListException
+import com.oleg.sokolov.gnbtrades.ui.base.adapter.BaseAdapterCallback
+import com.oleg.sokolov.gnbtrades.ui.base.view.*
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsAction
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsScreen
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsViewEffects
 import com.oleg.sokolov.gnbtrades.ui.products.presentation.ProductsViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_products.*
-import kotlinx.android.synthetic.main.fragment_transactions.*
 import javax.inject.Inject
 
-@AndroidEntryPoint
+
 class ProductsFragment : BaseFragment() {
 
-    private val viewModel: ProductsViewModel by viewModels()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<ProductsViewModel>{ viewModelFactory }
 
     @Inject
     lateinit var adapter: ProductsAdapter
 
-    override fun getLayout():  Int = R.layout.fragment_products
+    override fun getLayout(): Int = R.layout.fragment_products
 
     override fun viewReady() {
         viewModel.onAction(ProductsAction.OnViewStarted)
         subscribeToData()
         setupRecyclerView()
+    }
+
+    override fun initDagger() {
+        (activity?.application as App).component.inject(this)
     }
 
     private fun subscribeToData() {
@@ -56,8 +63,9 @@ class ProductsFragment : BaseFragment() {
 
     private fun handleViewEffects(viewEffect: ProductsViewEffects) {
         when (viewEffect) {
-            is ProductsViewEffects.NavigateToDetails ->    {
-                val action = ProductsFragmentDirections.actionProductsFragmentToDetailsFragment(viewEffect.product)
+            is ProductsViewEffects.NavigateToDetails -> {
+                val action =
+                    ProductsFragmentDirections.actionProductsFragmentToDetailsFragment(viewEffect.product)
                 findNavController().navigate(action)
             }
         }
@@ -111,7 +119,7 @@ class ProductsFragment : BaseFragment() {
         setupDivider()
     }
 
-    private fun setupDivider(){
+    private fun setupDivider() {
         context?.let { context ->
             ContextCompat.getDrawable(context, R.drawable.divider)?.let {
                 val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
@@ -120,7 +128,6 @@ class ProductsFragment : BaseFragment() {
             }
         }
     }
-
 
 
 }

@@ -1,21 +1,21 @@
 package com.oleg.sokolov.gnbtrades.ui.products.presentation
 
-import androidx.hilt.lifecycle.ViewModelInject
-import com.oleg.sokolov.gnbtrades.core.base.domain.model.onFailure
-import com.oleg.sokolov.gnbtrades.core.base.domain.model.onSuccess
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.Error
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.NoInternetState
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.Success
-import com.oleg.sokolov.gnbtrades.core.base.presentation.viewmodel.BaseViewModel
-import com.oleg.sokolov.gnbtrades.core.coroutine.CoroutineContextProvider
-import com.oleg.sokolov.gnbtrades.core.extensions.launch
-import com.oleg.sokolov.gnbtrades.core.network.Connectivity
+
+import com.oleg.sokolov.gnbtrades.data.common.coroutine.CoroutineContextProvider
+import com.oleg.sokolov.gnbtrades.data.common.utils.Connectivity
 import com.oleg.sokolov.gnbtrades.domain.interaction.products.GetProductListUseCase
+import com.oleg.sokolov.gnbtrades.domain.model.onFailure
+import com.oleg.sokolov.gnbtrades.domain.model.onSuccess
+import com.oleg.sokolov.gnbtrades.ui.base.view.Error
+import com.oleg.sokolov.gnbtrades.ui.base.view.NoInternetState
+import com.oleg.sokolov.gnbtrades.ui.base.view.Success
+import com.oleg.sokolov.gnbtrades.ui.base.viewmodel.BaseViewModel
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsAction
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsScreen
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsViewEffects
+import javax.inject.Inject
 
-class ProductsViewModel @ViewModelInject constructor(
+class ProductsViewModel @Inject constructor(
     private val getProductListUseCase: GetProductListUseCase,
     conn: Connectivity,
     contextProvider: CoroutineContextProvider
@@ -31,7 +31,8 @@ class ProductsViewModel @ViewModelInject constructor(
             is ProductsAction.OnViewStarted -> {
                 if (productsList.isEmpty()) getProductsList()
             }
-            is ProductsAction.OnItemClick -> _viewEffects.value = ProductsViewEffects.NavigateToDetails(productsList[action.position].name)
+            is ProductsAction.OnItemClick -> _viewEffects.value =
+                ProductsViewEffects.NavigateToDetails(productsList[action.position].name)
         }
     }
 

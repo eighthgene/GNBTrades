@@ -2,39 +2,45 @@ package com.oleg.sokolov.gnbtrades.ui.transactions.view
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oleg.sokolov.gnbtrades.App
 import com.oleg.sokolov.gnbtrades.R
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.*
-import com.oleg.sokolov.gnbtrades.core.extensions.gone
-import com.oleg.sokolov.gnbtrades.core.extensions.subscribe
-import com.oleg.sokolov.gnbtrades.core.extensions.visible
+import com.oleg.sokolov.gnbtrades.common.extensions.gone
+import com.oleg.sokolov.gnbtrades.common.extensions.subscribe
+import com.oleg.sokolov.gnbtrades.common.extensions.visible
 import com.oleg.sokolov.gnbtrades.domain.exceptions.EmptyListException
-import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
+import com.oleg.sokolov.gnbtrades.ui.base.view.*
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsAction
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreeData
+import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
 import com.oleg.sokolov.gnbtrades.ui.transactions.presentation.TransactionsViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_transactions.*
-import timber.log.Timber
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class TransactionsFragment : BaseFragment() {
 
     private val args: TransactionsFragmentArgs by navArgs()
-    private val viewModel: TransactionsViewModel by viewModels()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<TransactionsViewModel>{ viewModelFactory }
 
     @Inject
     lateinit var adapter: TransactionsAdapter
 
     override fun viewReady() {
-
         viewModel.onAction(TransactionsAction.OnViewLoaded(args.productNameArg))
         subscribeToData()
         setupRecyclerView()
+    }
+
+    override fun initDagger() {
+        (activity?.application as App).component.inject(this)
     }
 
     private fun setupRecyclerView() {

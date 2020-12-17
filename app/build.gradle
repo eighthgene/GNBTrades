@@ -28,11 +28,11 @@ android {
 }
 dependencies {
 
+    implementation project(":domain")
+    implementation project(":data")
+
     implementation libs.appCompat
     implementation libs.core
-
-    implementation libs.coroutinesCore
-    implementation libs.coroutinesAndroid
 
     //Jetpack
     implementation libs.material
@@ -48,29 +48,9 @@ dependencies {
     implementation libs.navigation
     implementation libs.navigationUI
 
-    //Moshi
-    implementation libs.moshi
-    kapt libs.moshiCodegen
-    implementation libs.moshiAdapter
-
-    //Retrofit2
-    implementation libs.retrofit
-    implementation libs.retrofitMoshi
-
-    //Database
-    implementation libs.roomRuntime
-    kapt libs.roomCompiler
-    implementation libs.room
 
     //Okhttp3
     implementation libs.okhttp
     implementation libs.okhttpInterceptor
-
-    implementation libs.hilt
-    implementation libs.hiltLegacy
-    kapt libs.hiltCompiler
-
-    implementation libs.hiltViewModel
-    kapt libs.hiltViewModelCompiler
 
 }

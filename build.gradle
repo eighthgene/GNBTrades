@@ -11,7 +11,7 @@ buildscript {
         classpath classpaths.gradlePlugin
         classpath classpaths.kotlin
         classpath classpaths.saveArgs
-        classpath classpaths.hilt
+        classpath classpaths.kotlinAndroidExt
     }
 }
 
@@ -32,7 +32,6 @@ subprojects {
     apply plugin: 'kotlin-android'
     apply plugin: 'kotlin-kapt'
     apply plugin: 'androidx.navigation.safeargs.kotlin'
-    apply plugin: 'dagger.hilt.android.plugin'
     apply plugin: 'kotlin-android-extensions'
 
     android {
@@ -69,11 +68,25 @@ subprojects {
         // Kotlin
         implementation libs.kotlin
 
+        // Dagger
+        api libs.dagger
+        kapt libs.daggerCompiler
+
+        // Coroutines
+        implementation libs.coroutinesCore
+        implementation libs.coroutinesAndroid
+
         // Logging
         implementation libs.timber
 
         // Unit tests
         testImplementation testLibs.junit
+
+        androidTestImplementation testLibs.androidTest
+        androidTestImplementation testLibs.androidTestRunner
+        androidTestImplementation testLibs.espresso
+        androidTestImplementation testLibs.androidTestCore
+        debugImplementation testLibs.androidTestFragment
 
     }
 

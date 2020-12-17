@@ -1,5 +1,19 @@
 apply from: "$rootDir/dependencies.gradle"
 
 dependencies {
+    implementation project(":domain")
 
+    //Retrofit2
+    api libs.retrofit
+    api libs.retrofitMoshi
+
+    //Database
+    api libs.roomRuntime
+    kapt libs.roomCompiler
+    implementation libs.room
+
+    //Moshi
+    api libs.moshi
+    kapt libs.moshiCodegen
+    api libs.moshiAdapter
 }

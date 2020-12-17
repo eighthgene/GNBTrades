@@ -1,24 +1,24 @@
 package com.oleg.sokolov.gnbtrades.ui.transactions.presentation
 
-import androidx.hilt.lifecycle.ViewModelInject
-import com.oleg.sokolov.gnbtrades.core.base.domain.model.onFailure
-import com.oleg.sokolov.gnbtrades.core.base.domain.model.onSuccess
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.Error
-import com.oleg.sokolov.gnbtrades.core.base.presentation.view.Success
-import com.oleg.sokolov.gnbtrades.core.base.presentation.viewmodel.BaseViewModel
-import com.oleg.sokolov.gnbtrades.core.coroutine.CoroutineContextProvider
-import com.oleg.sokolov.gnbtrades.core.extensions.roundUI
-import com.oleg.sokolov.gnbtrades.core.network.Connectivity
+import com.oleg.sokolov.gnbtrades.common.extensions.roundUI
+import com.oleg.sokolov.gnbtrades.data.common.coroutine.CoroutineContextProvider
+import com.oleg.sokolov.gnbtrades.data.common.utils.Connectivity
 import com.oleg.sokolov.gnbtrades.domain.interaction.rates.GetRatesUseCase
 import com.oleg.sokolov.gnbtrades.domain.interaction.transactions.GetTransactionsUseCase
 import com.oleg.sokolov.gnbtrades.domain.model.ExchangeListTo
+import com.oleg.sokolov.gnbtrades.domain.model.onFailure
+import com.oleg.sokolov.gnbtrades.domain.model.onSuccess
+import com.oleg.sokolov.gnbtrades.ui.base.view.Error
+import com.oleg.sokolov.gnbtrades.ui.base.view.Success
+import com.oleg.sokolov.gnbtrades.ui.base.viewmodel.BaseViewModel
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsAction
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreeData
-import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsViewEffects
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
+import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsViewEffects
+import javax.inject.Inject
 
 
-class TransactionsViewModel @ViewModelInject constructor(
+class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getRatesUseCase: GetRatesUseCase,
     conn: Connectivity,
