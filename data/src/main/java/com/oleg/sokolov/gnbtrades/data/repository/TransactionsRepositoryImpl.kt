@@ -26,7 +26,7 @@ class TransactionsRepositoryImpl @Inject constructor(
         return fetchData(
             apiDataProvider = {
                 GNBankApi.getTransactions().getUpdatedDataFromCache(
-                    cacheAction = { it ->
+                    cacheAction = {
                         transactionsDao.saveTransaction(it.transactionList)
                     },
                     fetchFromCacheAction = {
