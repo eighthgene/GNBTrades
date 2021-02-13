@@ -15,7 +15,6 @@ ext {
             "saveArgs"         : "1.0.0",
 
             // App dependencies
-            "dagger"           : "2.28.1",
             "navigation"       : "2.3.1",
             "moshi"            : "1.8.0",
             "retrofit"         : "2.6.0",
@@ -34,6 +33,7 @@ ext {
             "lifecycle"        : "2.2.0",
             "recyclerview"     : "1.1.0",
             "room"             : "2.1.0",
+            "koin"             : "2.0.1",
 
             //test
             "mockk"            : "1.9.3",
@@ -48,16 +48,14 @@ ext {
     ]
 
     classpaths = [
-            "gradlePlugin": "com.android.tools.build:gradle:$versions.gradlePlugin",
-            "saveArgs"    : "android.arch.navigation:navigation-safe-args-gradle-plugin:$versions.saveArgs",
-            "kotlin"      : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+            "gradlePlugin"    : "com.android.tools.build:gradle:$versions.gradlePlugin",
+            "saveArgs"        : "android.arch.navigation:navigation-safe-args-gradle-plugin:$versions.saveArgs",
+            "kotlin"          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
             "kotlinAndroidExt": "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlin",
     ]
 
     libs = [
             "kotlin"           : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
-            "dagger"           : "com.google.dagger:dagger:$versions.dagger",
-            "daggerCompiler"   : "com.google.dagger:dagger-compiler:$versions.dagger",
 
             "coroutinesCore"   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutinesCore",
             "coroutinesAndroid": "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesAndroid",
@@ -93,6 +91,9 @@ ext {
             "okhttp"           : "com.squareup.okhttp3:okhttp:$versions.okHttp",
             "okhttpInterceptor": "com.squareup.okhttp3:logging-interceptor:$versions.okHttp",
 
+            "koin"             : "org.koin:koin-android:$versions.koin",
+            "koinViewModel"    : "org.koin:koin-androidx-viewmodel:$versions.koin",
+            "koinScope"        : "org.koin:koin-androidx-scope:$versions.koin",
 
     ]
 

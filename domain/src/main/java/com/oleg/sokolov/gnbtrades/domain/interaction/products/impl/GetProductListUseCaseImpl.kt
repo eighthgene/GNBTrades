@@ -5,9 +5,8 @@ import com.oleg.sokolov.gnbtrades.domain.model.Failure
 import com.oleg.sokolov.gnbtrades.domain.model.Result
 import com.oleg.sokolov.gnbtrades.domain.model.Success
 import com.oleg.sokolov.gnbtrades.domain.repository.TransactionsRepository
-import javax.inject.Inject
 
-class GetProductListUseCaseImpl @Inject constructor(
+class GetProductListUseCaseImpl constructor(
     private val transactionsRepository: TransactionsRepository
 ) : GetProductListUseCase {
 

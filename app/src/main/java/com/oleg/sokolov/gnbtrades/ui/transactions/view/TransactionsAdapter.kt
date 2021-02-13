@@ -8,9 +8,9 @@ import com.oleg.sokolov.gnbtrades.ui.base.adapter.BaseAdapter
 import com.oleg.sokolov.gnbtrades.ui.base.adapter.BaseViewHolder
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
 import kotlinx.android.synthetic.main.transaction_item.view.*
-import javax.inject.Inject
 
-class TransactionsAdapter @Inject constructor(): BaseAdapter<TransactionsScreen>() {
+
+class TransactionsAdapter : BaseAdapter<TransactionsScreen>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TransactionsScreen> {
         return TransactionViewHolder(

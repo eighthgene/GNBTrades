@@ -1,8 +1,6 @@
 package com.oleg.sokolov.gnbtrades.ui.transactions.view
 
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,28 +17,21 @@ import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreeData
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
 import com.oleg.sokolov.gnbtrades.ui.transactions.presentation.TransactionsViewModel
 import kotlinx.android.synthetic.main.fragment_transactions.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TransactionsFragment : BaseFragment() {
 
     private val args: TransactionsFragmentArgs by navArgs()
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: TransactionsViewModel by viewModel()
 
-    private val viewModel by viewModels<TransactionsViewModel>{ viewModelFactory }
-
-    @Inject
-    lateinit var adapter: TransactionsAdapter
+    private val adapter: TransactionsAdapter by inject()
 
     override fun viewReady() {
         viewModel.onAction(TransactionsAction.OnViewLoaded(args.productNameArg))
         subscribeToData()
         setupRecyclerView()
-    }
-
-    override fun initDagger() {
-        (activity?.application as App).component.inject(this)
     }
 
     private fun setupRecyclerView() {

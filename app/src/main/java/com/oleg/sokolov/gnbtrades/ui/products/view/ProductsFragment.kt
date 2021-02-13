@@ -2,8 +2,6 @@ package com.oleg.sokolov.gnbtrades.ui.products.view
 
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,18 +20,13 @@ import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsScreen
 import com.oleg.sokolov.gnbtrades.ui.products.model.ProductsViewEffects
 import com.oleg.sokolov.gnbtrades.ui.products.presentation.ProductsViewModel
 import kotlinx.android.synthetic.main.fragment_products.*
-import javax.inject.Inject
-
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductsFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<ProductsViewModel>{ viewModelFactory }
-
-    @Inject
-    lateinit var adapter: ProductsAdapter
+    private val viewModel: ProductsViewModel by viewModel()
+    private val adapter: ProductsAdapter by inject()
 
     override fun getLayout(): Int = R.layout.fragment_products
 
@@ -41,10 +34,6 @@ class ProductsFragment : BaseFragment() {
         viewModel.onAction(ProductsAction.OnViewStarted)
         subscribeToData()
         setupRecyclerView()
-    }
-
-    override fun initDagger() {
-        (activity?.application as App).component.inject(this)
     }
 
     private fun subscribeToData() {

@@ -1,58 +1,49 @@
 package com.oleg.sokolov.gnbtrades.data.di
 
-import android.content.Context
 import com.oleg.sokolov.gnbtrades.data.GNBankApi
 import com.oleg.sokolov.gnbtrades.data.common.utils.Connectivity
 import com.oleg.sokolov.gnbtrades.data.common.utils.ConnectivityImpl
 import com.oleg.sokolov.gnbtrades.data.networking.TransactionsResponseAdapter
 import com.oleg.sokolov.gnbtrades.data.networking.model.RatesResponseAdapter
 import com.squareup.moshi.Moshi
-import dagger.Module
-import dagger.Provides
 
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-import javax.inject.Singleton
+private const val BASE_URL = "http://quiet-stone-2094.herokuapp.com"
 
-@Module
+val networkingModule = module {
 
-object NetworkingModule {
-
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi =
+    single {
         Moshi.Builder()
             .add(TransactionsResponseAdapter())
             .add(RatesResponseAdapter())
             .build()
+    }
 
-    @Provides
-    @Singleton
-    fun provideTransactionsRetrofit(adapter: Moshi, httpClient: OkHttpClient): Retrofit =
+    single {
         Retrofit.Builder()
-            .baseUrl("http://quiet-stone-2094.herokuapp.com")
-            .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(adapter))
+            .baseUrl(BASE_URL)
+            .client(get())
+            .addConverterFactory(MoshiConverterFactory.create(get()))
             .build()
+    }
 
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient =
+    single {
         OkHttpClient()
             .newBuilder()
             .build()
+    }
 
-    @Provides
-    @Singleton
-    fun provideConnectivity(context: Context): Connectivity =
-        ConnectivityImpl(context)
+    single<Connectivity> {
+        ConnectivityImpl(androidContext())
+    }
 
-    @Singleton
-    @Provides
-    fun provideTransactionsApi(retrofit: Retrofit): GNBankApi =
-        retrofit.create(GNBankApi::class.java)
+    single {
+        get<Retrofit>().create(GNBankApi::class.java)
+    }
 
 }

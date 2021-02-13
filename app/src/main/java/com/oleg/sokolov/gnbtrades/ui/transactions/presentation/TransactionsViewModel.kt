@@ -1,8 +1,6 @@
 package com.oleg.sokolov.gnbtrades.ui.transactions.presentation
 
 import com.oleg.sokolov.gnbtrades.common.extensions.roundUI
-import com.oleg.sokolov.gnbtrades.data.common.coroutine.CoroutineContextProvider
-import com.oleg.sokolov.gnbtrades.data.common.utils.Connectivity
 import com.oleg.sokolov.gnbtrades.domain.interaction.rates.GetRatesUseCase
 import com.oleg.sokolov.gnbtrades.domain.interaction.transactions.GetTransactionsUseCase
 import com.oleg.sokolov.gnbtrades.domain.model.ExchangeListTo
@@ -15,18 +13,11 @@ import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsAction
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreeData
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsScreen
 import com.oleg.sokolov.gnbtrades.ui.transactions.model.TransactionsViewEffects
-import javax.inject.Inject
 
-
-class TransactionsViewModel @Inject constructor(
+class TransactionsViewModel constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
-    private val getRatesUseCase: GetRatesUseCase,
-    conn: Connectivity,
-    contextProvider: CoroutineContextProvider
-) : BaseViewModel<TransactionsScreeData, TransactionsAction, TransactionsViewEffects>(
-    conn,
-    contextProvider
-) {
+    private val getRatesUseCase: GetRatesUseCase
+) : BaseViewModel<TransactionsScreeData, TransactionsAction, TransactionsViewEffects>() {
 
     private val transactions = ArrayList<TransactionsScreen>()
     private var total: String = "0"
@@ -59,7 +50,12 @@ class TransactionsViewModel @Inject constructor(
                             total = exchangeListFrom.amount.roundUI()
 
                             runOnUI {
-                                _viewState.value = Success(TransactionsScreeData(mappedList, exchangeListFrom.amount.roundUI()))
+                                _viewState.value = Success(
+                                    TransactionsScreeData(
+                                        mappedList,
+                                        exchangeListFrom.amount.roundUI()
+                                    )
+                                )
                             }
                         }
 

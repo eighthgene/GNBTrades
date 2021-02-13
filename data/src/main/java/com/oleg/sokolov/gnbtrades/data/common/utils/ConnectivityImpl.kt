@@ -3,9 +3,8 @@ package com.oleg.sokolov.gnbtrades.data.common.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import javax.inject.Inject
 
-class ConnectivityImpl @Inject constructor(
+class ConnectivityImpl constructor(
     private val context: Context
 ) : Connectivity {
 

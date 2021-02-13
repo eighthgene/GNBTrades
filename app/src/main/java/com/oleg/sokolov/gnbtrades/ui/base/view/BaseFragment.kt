@@ -15,11 +15,6 @@ import com.oleg.sokolov.gnbtrades.common.extensions.visible
 
 abstract class BaseFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initDagger()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,8 +27,6 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewReady()
     }
-
-    abstract fun initDagger()
 
     abstract fun viewReady()
 

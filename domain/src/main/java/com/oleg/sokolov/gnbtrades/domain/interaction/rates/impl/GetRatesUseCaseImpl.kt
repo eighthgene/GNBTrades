@@ -6,9 +6,8 @@ import com.oleg.sokolov.gnbtrades.domain.model.*
 import com.oleg.sokolov.gnbtrades.domain.repository.RatesRepository
 import timber.log.Timber
 import java.math.BigDecimal
-import javax.inject.Inject
 
-class GetRatesUseCaseImpl @Inject constructor(
+class GetRatesUseCaseImpl constructor(
     private val ratesRepository: RatesRepository
 ) : GetRatesUseCase {
 

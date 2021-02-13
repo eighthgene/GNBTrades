@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath classpaths.gradlePlugin
+        classpath "com.android.tools.build:gradle:${versions.gradlePlugin}"
         classpath classpaths.kotlin
         classpath classpaths.saveArgs
         classpath classpaths.kotlinAndroidExt
@@ -68,9 +68,11 @@ subprojects {
         // Kotlin
         implementation libs.kotlin
 
-        // Dagger
-        api libs.dagger
-        kapt libs.daggerCompiler
+        // Koin
+        api libs.koin
+        api libs.koinViewModel
+        api libs.koinScope
+
 
         // Coroutines
         implementation libs.coroutinesCore

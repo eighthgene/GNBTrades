@@ -6,19 +6,10 @@ import com.oleg.sokolov.gnbtrades.domain.interaction.rates.GetRatesUseCase
 import com.oleg.sokolov.gnbtrades.domain.interaction.rates.impl.GetRatesUseCaseImpl
 import com.oleg.sokolov.gnbtrades.domain.interaction.transactions.GetTransactionsUseCase
 import com.oleg.sokolov.gnbtrades.domain.interaction.transactions.impl.GetTransactionsUseCaseImpl
-import dagger.Binds
-import dagger.Module
+import org.koin.dsl.module
 
-@Module
-abstract class UseCaseModule {
-
-    @Binds
-    abstract fun provideGetProductListUseCase(getProductListUseCaseImpl: GetProductListUseCaseImpl): GetProductListUseCase
-
-    @Binds
-    abstract fun provideGetTransactionsUseCase(getTransactionsUseCase: GetTransactionsUseCaseImpl): GetTransactionsUseCase
-
-    @Binds
-    abstract fun provideGetRatesUseCase(getRatesUseCase: GetRatesUseCaseImpl): GetRatesUseCase
-
+val useCaseModule = module {
+    factory<GetProductListUseCase> {GetProductListUseCaseImpl(transactionsRepository = get())}
+    factory<GetTransactionsUseCase> {GetTransactionsUseCaseImpl(transactionsRepository = get())}
+    factory<GetRatesUseCase> {GetRatesUseCaseImpl(ratesRepository = get())}
 }

@@ -4,20 +4,12 @@ import com.oleg.sokolov.gnbtrades.data.repository.RatesRepositoryImpl
 import com.oleg.sokolov.gnbtrades.data.repository.TransactionsRepositoryImpl
 import com.oleg.sokolov.gnbtrades.domain.repository.RatesRepository
 import com.oleg.sokolov.gnbtrades.domain.repository.TransactionsRepository
-import dagger.Binds
-import dagger.Module
+import org.koin.dsl.module
 
-@Module
-abstract class RepositoryModule {
 
-    @Binds
-    abstract fun provideTransactionRepository(
-        transactionsRepository: TransactionsRepositoryImpl
-    ): TransactionsRepository
+val repositoryModule = module {
 
-    @Binds
-    abstract fun provideRatesRepository(
-        ratesRepository: RatesRepositoryImpl
-    ): RatesRepository
+    factory<TransactionsRepository> { TransactionsRepositoryImpl(GNBankApi = get(), transactionsDao = get()) }
+    factory<RatesRepository> { RatesRepositoryImpl(GNBankApi = get(), ratesDao = get()) }
 
 }

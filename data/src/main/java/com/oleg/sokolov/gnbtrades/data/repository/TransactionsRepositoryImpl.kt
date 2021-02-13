@@ -1,8 +1,6 @@
 package com.oleg.sokolov.gnbtrades.data.repository
 
 import com.oleg.sokolov.gnbtrades.data.GNBankApi
-import com.oleg.sokolov.gnbtrades.data.common.coroutine.CoroutineContextProvider
-import com.oleg.sokolov.gnbtrades.data.common.utils.Connectivity
 import com.oleg.sokolov.gnbtrades.data.database.dao.TransactionsDao
 import com.oleg.sokolov.gnbtrades.data.database.model.TransactionEntityList
 import com.oleg.sokolov.gnbtrades.data.networking.DB_ENTRY_ERROR
@@ -10,17 +8,11 @@ import com.oleg.sokolov.gnbtrades.data.networking.base.getUpdatedDataFromCache
 import com.oleg.sokolov.gnbtrades.domain.model.*
 import com.oleg.sokolov.gnbtrades.domain.repository.TransactionsRepository
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class TransactionsRepositoryImpl @Inject constructor(
+class TransactionsRepositoryImpl constructor(
     private val GNBankApi: GNBankApi,
     private val transactionsDao: TransactionsDao,
-    connectivity: Connectivity,
-    contextProvider: CoroutineContextProvider
-) : BaseRepository<List<Transaction>, TransactionEntityList>(
-    connectivity = connectivity,
-    contextProvider = contextProvider
-), TransactionsRepository {
+) : BaseRepository<List<Transaction>, TransactionEntityList>(), TransactionsRepository {
 
     override suspend fun getTransactions(): Result<List<Transaction>> {
         return fetchData(

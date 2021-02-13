@@ -1,10 +1,9 @@
 package com.oleg.sokolov.gnbtrades.data.common.coroutine
 
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-open class CoroutineContextProvider @Inject constructor() {
+open class CoroutineContextProvider {
   open val main: CoroutineContext by lazy { Dispatchers.Main }
   open val io: CoroutineContext by lazy { Dispatchers.IO }
   open val default: CoroutineContext by lazy { Dispatchers.Default }

@@ -10,17 +10,11 @@ import com.oleg.sokolov.gnbtrades.data.networking.base.getUpdatedDataFromCache
 import com.oleg.sokolov.gnbtrades.domain.model.Rate
 import com.oleg.sokolov.gnbtrades.domain.model.Result
 import com.oleg.sokolov.gnbtrades.domain.repository.RatesRepository
-import javax.inject.Inject
 
-class RatesRepositoryImpl @Inject constructor(
+class RatesRepositoryImpl constructor(
     private val GNBankApi: GNBankApi,
-    private val ratesDao: RatesDao,
-    connectivity: Connectivity,
-    contextProvider: CoroutineContextProvider
-) : BaseRepository<List<Rate>, RatesEntityList>(
-    connectivity = connectivity,
-    contextProvider = contextProvider
-), RatesRepository {
+    private val ratesDao: RatesDao
+) : BaseRepository<List<Rate>, RatesEntityList>(), RatesRepository {
 
     /*
     Get rates from Rest API if has connection, else get rates from DataBase

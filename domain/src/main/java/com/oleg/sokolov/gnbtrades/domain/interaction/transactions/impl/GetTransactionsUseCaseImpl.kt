@@ -7,9 +7,8 @@ import com.oleg.sokolov.gnbtrades.domain.model.Failure
 import com.oleg.sokolov.gnbtrades.domain.model.Result
 import com.oleg.sokolov.gnbtrades.domain.model.Transaction
 import com.oleg.sokolov.gnbtrades.domain.repository.TransactionsRepository
-import javax.inject.Inject
 
-class GetTransactionsUseCaseImpl @Inject constructor(
+class GetTransactionsUseCaseImpl constructor(
     private val transactionsRepository: TransactionsRepository
 ) : GetTransactionsUseCase {
 

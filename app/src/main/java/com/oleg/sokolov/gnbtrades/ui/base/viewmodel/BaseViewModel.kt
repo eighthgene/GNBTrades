@@ -9,12 +9,14 @@ import com.oleg.sokolov.gnbtrades.data.common.utils.Connectivity
 import com.oleg.sokolov.gnbtrades.ui.base.view.Loading
 import com.oleg.sokolov.gnbtrades.ui.base.view.ViewState
 import kotlinx.coroutines.withContext
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 
-abstract class BaseViewModel<T : Any, A, E> constructor(
-    var connectivity: Connectivity,
-    var contextProvider: CoroutineContextProvider
-) : ViewModel() {
+abstract class BaseViewModel<T : Any, A, E> : ViewModel(), KoinComponent {
+
+    protected val connectivity: Connectivity by inject()
+    private val contextProvider: CoroutineContextProvider by inject()
 
     protected val _viewState = MutableLiveData<ViewState<T>>()
     val viewState: LiveData<ViewState<T>>
